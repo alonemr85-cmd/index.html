@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیام‌های ستاره‌ای</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- تنظیمات کلی --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #000; /* پس زمینه مشکی خالص */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* --- پس زمینه ستاره های متحرک --- */
+        #star-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* --- کانتینر اصلی برای قرار دادن دایره --- */
+        .content-wrapper {
+            position: relative;
+            width: 90vw;
+            height: 90vw;
+            max-width: 450px;
+            max-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+       
+        /* --- کانتینر محتوا (دایره شیشه ای) --- */
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            background-color: rgba(0, 0, 10, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(173, 216, 230, 0.4), 0 0 30px rgba(173, 216, 230, 0.3), inset 0 0 10px rgba(173, 216, 230, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-sizing: border-box;
+        }
+        
+        /* --- صفحه ورود --- */
+        #login-screen h2 {
+            margin-bottom: 2rem; font-weight: 700; color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
+        }
+        #passcode-input {
+            width: 70%; padding: 12px 20px; margin-bottom: 1rem; border-radius: 10px;
+            border: 2px solid #87CEEB; background-color: rgba(0, 0, 0, 0.5); text-align: center;
+            font-size: 1.2rem; color: #fff; font-family: 'Vazirmatn', sans-serif;
+            box-shadow: inset 0 0 10px rgba(135, 206, 235, 0.5);
+        }
+        #login-button {
+            padding: 12px 35px; border: 2px solid #FFD700; border-radius: 10px;
+            background-color: transparent; color: #FFD700; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease; text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700;
+            box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, inset 0 0 5px #FFD700;
+        }
+        #login-button:hover { background-color: #FFD700; color: #000; transform: scale(1.05); text-shadow: none; }
+        #error-message { color: #ff8fa3; margin-top: 1rem; height: 20px; font-weight: bold; text-shadow: 0 0 5px #ff8fa3; }
+
+        /* --- انیمیشن بارگذاری --- */
+        #loading-screen { display: none; }
+        .loader {
+            border: 8px solid rgba(255,255,255,0.2); border-top: 8px solid #FFD700;
+            border-radius: 50%; width: 60px; height: 60px; animation: spin 1.5s linear infinite;
+            margin: 0 auto; box-shadow: 0 0 15px #FFD700;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #loading-screen p { margin-top: 1.5rem; font-size: 1.2rem; text-shadow: 0 0 8px #fff; }
+
+        /* --- صفحه اصلی برنامه --- */
+        #app-screen { display: none; }
+        #quote-display {
+            font-size: 1.4rem; line-height: 2.4rem; font-weight: 400; min-height: 100px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+            color: #f0f0f0; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #8A2BE2;
+        }
+        #restart-message {
+            font-size: 1rem; color: #FFD700; text-shadow: 0 0 5px #FFD700; margin-top: 1.5rem;
+        }
+        #back-button {
+            padding: 10px 30px; border: 2px solid #8A2BE2; border-radius: 10px;
+            background-color: transparent; color: #8A2BE2; font-size: 1rem; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease; text-shadow: 0 0 5px #8A2BE2;
+            box-shadow: 0 0 5px #8A2BE2, inset 0 0 5px #8A2BE2; margin-top: 1rem;
+        }
+        #back-button:hover { background-color: #8A2BE2; color: #fff; text-shadow: none; }
+    </style>
+</head>
+<body>
+    <div id="star-background"></div>
+
+    <div class="content-wrapper">
+        <div id="login-screen" class="container">
+            <h2>Welcome my Love</h2>
+            <input type="password" id="passcode-input" placeholder="****">
+            <div id="error-message"></div>
+            <button id="login-button">ورود</button>
+        </div>
+
+        <div id="loading-screen" class="container" style="display: none;">
+            <div class="loader"></div>
+            <p>در حال دریافت پیام...</p>
+        </div>
+
+        <div id="app-screen" class="container" style="display: none;">
+            <div id="quote-display">...</div>
+            <div id="restart-message">برای دریافت پیام جدید، دوباره وارد شوید.</div>
+            <button id="back-button">بازگشت</button>
+        </div>
+    </div>
+
+    <script>
+        // --- ایجاد ستاره ها در پس زمینه ---
+        function createStars() {
+            const starBackground = document.getElementById('star-background');
+            // برای جلوگیری از ایجاد چندباره ستاره ها، ابتدا داخل آن را خالی می کنیم
+            if (starBackground.childElementCount > 0) return;
+
+            const starCount = 200;
+            const colors = ['#87CEEB', '#FFD700', '#FFFFFF', '#8A2BE2']; // آبی، زرد، سفید، بنفش
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3 + 1; // اندازه بین 1 تا 4 پیکسل
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.backgroundColor = color;
+                star.style.boxShadow = `0 0 8px ${color}, 0 0 12px ${color}`;
+                
+                // تاخیر و سرعت انیمیشن تصادفی برای طبیعی تر شدن
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                star.style.animationDuration = `${Math.random() * 2 + 2}s`;
+
+                starBackground.appendChild(star);
+            }
+        }
+        
+        // --- منطق اصلی برنامه ---
+        const quotes = [
+            "تو خلاصه‌ی تمام چیزهایی هستی که آرزو کرده‌ام.", "قلب من فقط برای تو می‌تپد.", "عشق تو بهترین اتفاق زندگی من است.", "در کنار تو، هر روز یک ماجراجویی زیباست.", "تو آرامش بخش‌ترین حضور در دنیای منی.", "هر لحظه با تو بودن، یک خاطره شیرین است.", "تو دلیل لبخندهای بی‌پایان منی.", "عشق یعنی وقتی نام تو را می‌شنوم، قلبم می‌لرزد.", "تو ستاره‌ای هستی که آسمان شبم را روشن می‌کنی.", "زندگی با تو معنای دیگری دارد.", "تو زیباترین شعری هستی که خدا سروده است.", "من در چشمان تو، دنیایم را پیدا کردم.", "آغوش تو امن‌ترین جای دنیاست.", "عشق تو به من قدرت می‌دهد.", "تو نیمه گمشده‌ی روح من هستی.", "با تو، خوشبختی یک احساس همیشگی است.", "تو ماه منی در تاریک‌ترین شب‌ها.", "صدای تو زیباترین موسیقی دنیاست.", "فکر کردن به تو، شیرین‌ترین کار روزانه من است.", "تو پادشاه یا ملکه‌ی قلب من هستی.", "عشق ما جاودانه خواهد بود.", "تو همان یک نفری هستی که برایش همه چیزم را می‌دهم.", "هر نفسی که می‌کشم، به یاد تو هستم.", "تو رویای تحقق یافته‌ی منی.", "عشق یعنی من، تو و یک آینده مشترک.", "تو رنگین‌کمان زندگی من هستی.", "حتی فکر دوری از تو برایم غیرممکن است.", "تو تنها کسی هستی که قلبم را لمس کرده.", "با تو، هر روز روز عشق است.", "تو دلیل تمام خوشی‌های کوچک و بزرگ منی.", "عشق تو مرا به بهترین نسخه از خودم تبدیل کرده.", "تو معجزه‌ی زندگی من هستی.", "من برای دوست داشتن تو به دنیا آمده‌ام.", "تو شیرین‌ترین اعتیاد منی.", "قلب من خانه‌ی ابدی توست.", "تو نوری هستی که راه زندگی‌ام را روشن می‌کی.", "عشق ما قصه‌ای است که هرگز تمام نمی‌شود.", "تو تمام چیزی هستی که از دنیا می‌خواهم.", "هر روز بیشتر از دیروز عاشقت می‌شوم.", "تو بهترین هدیه‌ای هستی که از خدا گرفته‌ام.", "تو قهرمان داستان زندگی من هستی.", "عشق تو در رگ‌های من جاریست.", "تو تنها انتخاب قلب من بودی و خواهی بود.", "دنیای من با وجود تو زیباست.", "تو فرشته‌ی نجات من هستی.", "عشق یعنی شمارش ثانیه‌ها برای دیدن تو.", "تو همان حس خوبی هستی که همیشه دنبالش بودم.", "تو معنای واقعی کلمه عشقی.", "من خوشبخت‌ترینم چون تو را دارم.", "تو به زندگی من رنگ و بوی عشق دادی.", "تو تنها آرزوی قلبی من هستی.", "عشق ما مانند یک الماس، درخشان و ابدی است.", "تو دلیل تپش‌های قلب منی.", "من با تو کامل می‌شوم.", "تو زیباترین منظره‌ی دنیا برای چشمان منی.", "عشق تو مرا زنده نگه می‌دارد.", "تو همه‌چیز منی.", "تو شریک رویاهای من هستی.", "عشق یعنی پیدا کردن خود در وجود دیگری.", "تو آرام جان منی.", "من تا ابد و یک روز عاشقت خواهم ماند.", "تو جادوی زندگی منی.", "عشق ما قوی‌تر از هر چیزی است.", "تو دلیل بیداری‌های شیرین صبح منی.", "تو تنها کسی هستی که می‌خواهم با او پیر شوم.", "عشق یعنی اعتماد بی‌پایان به تو.", "تو بهشت کوچک من روی زمینی.", "من در کنار تو خودم هستم، بهترین خودم.", "تو نبض زندگی منی.", "عشق ما یک سفر بی‌پایان است.", "تو زیباترین اتفاق غیرمنتظره‌ی زندگی‌ام بودی.", "تو همان دعایی هستی که مستجاب شده.", "عشق یعنی خندیدن با تو از ته دل.", "تو نقطه‌ی امن دنیای منی.", "من برای همیشه کنار تو خواهم بود.", "تو دلیل تمام شعرهای عاشقانه منی.", "عشق یعنی وقتی حالت خوب نیست، من هم خوب نیستم.", "تو تنها کسی هستی که می‌تواند مرا آرام کند.", "من به عشق تو زنده‌ام.", "تو تمام دنیای منی در یک نفر.", "عشق ما زیباترین داستان دنیاست.", "تو همان کسی هستی که قلبم را به او سپردم.", "تو نور چشم‌های منی.", "من خوشبختی را در چشمان تو می‌بینم.", "تو دلیل لبخند روی لب‌های منی.", "عشق یعنی تو، و دیگر هیچ.", "تو بهترین دوست و بزرگترین عشق منی.", "من هر روز برای داشتنت خدا را شکر می‌کنم.", "تو تنها چیزی هستی که برای خوشبختی لازم دارم.", "عشق ما یک معجزه است.", "تو زیباترین فکری هستی که هر روز به ذهنم می‌رسد.", "من با تو به اوج آرامش می‌رسم.", "تو همان رویایی هستی که نمی‌خواهم از آن بیدار شوم.", "عشق یعنی ساختن آینده‌ای زیبا با تو.", "تو تمام هستی منی.", "من در کنار تو معنای واقعی زندگی را فهمیدم.", "تو بهترین اتفاقی هستی که می‌توانست برایم بیفتد.", "عشق ما تا ابدیت ادامه خواهد داشت.", "تو تنها کسی هستی که می‌خواهم هر روزم را با او شروع کنم.",
+            "جهانم با تو زیباتر است.", "تو همان اتفاق خوبی هستی که هر صبح منتظرش هستم.", "عشق تو، پناهگاه امن من است.", "هر نت از خنده‌هایت، یک سمفونی در قلب من است.", "تو شعری هستی که هرگز از خواندنش خسته نمی‌شوم.", "در دنیای شلوغ من، تو تنها نقطه‌ی آرامشی.", "تو رنگی هستی که به بوم بی‌رنگ زندگی‌ام جان بخشیدی.", "عشق یعنی پیدا کردن تکه‌ای از خودت در قلب دیگری.", "تو همان رویایی هستی که به حقیقت پیوست.", "با تو، هر مسیر سختی آسان می‌شود.", "تو دلیل تمام حس‌های خوب دنیایی.", "قلبم را به تو سپردم، بهترین امانت‌دار دنیا.", "تو ماه کاملی در آسمان تاریک منی.", "عشق ما، داستانی برای تمام نسل‌هاست.", "تو همان یک نفری که با تمام دنیا عوضش نمی‌کنم.", "هر روز با تو، یک صفحه جدید از خوشبختی است.", "تو معجزه‌ای هستی که خدا در زندگی‌ام قرار داد.", "عشق یعنی در کنار تو بودن، حتی در سکوت.", "تو تنها کسی هستی که می‌توانی روحم را لمس کنی.", "با تو، زندگی ارزش زیستن دارد.", "تو همان آهنگ دلنشینی هستی که همیشه در ذهنم تکرار می‌شود.", "عشق تو، بزرگترین سرمایه‌ی زندگی من است.", "تو دلیل تمام امیدهای منی.", "من در کنار تو، قوی‌ترین آدم روی زمینم.", "تو همان بهشتی هستی که روی زمین پیدا کرده‌ام.", "عشق یعنی تو، و یک دنیا آرامش.", "تو زیباترین تابلویی هستی که دیده‌ام.", "هر لحظه دور از تو، یک قرن است.", "تو همان ستاره‌ی دنباله‌داری هستی که آرزویم را برآورده کرد.", "عشق ما، یک سفر بی‌انتهاست.", "تو دلیل تمام شعرهای نانوشته‌ی منی.", "من با تو، به معنای واقعی کلمه زنده‌ام.", "تو همان حس نابی هستی که تکرار نمی‌شود.", "عشق یعنی وقتی تو هستی، دیگر هیچ‌چیز کم نیست.", "تو تنها کسی هستی که با او می‌توانم خودم باشم.", "با تو، هر روز یک عید است.", "تو همان گنجی هستی که همیشه دنبالش می‌گشتم.", "عشق ما، زیباترین نقاشی خداست.", "تو دلیل تمام لبخندهای عمیق منی.", "من در چشمان تو، آینده‌ام را می‌بینم.", "تو همان آرامشی هستی که بعد از هر طوفان می‌آید.", "عشق یعنی با تو پیر شدن، زیباترین آرزوست.", "تو تنها کسی هستی که قلبم برایش می‌لرزد.", "با تو، دنیا جای بهتری برای زندگی است.", "تو همان نوری هستی که تاریکی‌هایم را از بین می‌برد.", "عشق ما، یک حقیقت شیرین است.", "تو دلیل تمام خوشبختی‌های بی‌پایان منی.", "من برای همیشه، در کنار تو خواهم ماند.", "تو همان دعای خیری هستی که مادرم برایم کرده بود.", "عشق یعنی تو، و یک دنیا خاطره‌ی شیرین.", "تو بهترین اتفاقی هستی که در بهترین زمان رخ دادی.", "قلب من، خانه‌ی همیشگی توست.", "تو زیباترین ملودی زندگی منی.", "عشق تو، مرا کامل می‌کند.", "تو همان یک نفری هستی که برایم یک دنیاست.", "با تو، هر روز پر از شگفتی است.", "تو دلیل تمام رویاهای شیرین منی.", "عشق یعنی وقتی تو می‌خندی، دنیا می‌خندد.", "تو تنها کسی هستی که می‌خواهم تمام عمرم را با او بگذرانم.", "من در کنار تو، به آرامش مطلق می‌رسم.", "تو همان گلی هستی که در باغچه‌ی قلبم روییده.", "عشق ما، یک شعر بی‌پایان است.", "تو دلیل تمام نفس‌های منی.", "من با تو، به اوج خوشبختی رسیده‌ام.", "تو همان فرشته‌ای هستی که از آسمان آمده.", "عشق یعنی تو، و یک آینده‌ی روشن.", "تو زیباترین هدیه‌ی سرنوشت به منی.", "هر نگاه تو، یک دنیا حرف دارد.", "تو همان کسی هستی که قلبم را به آتش می‌کشد.", "با تو، هر لحظه یک معجزه است.", "تو دلیل تمام شادی‌های کوچک و بزرگ منی.", "من در کنار تو، خودم را پیدا کرده‌ام.", "تو همان حس خوبی هستی که قابل وصف نیست.", "عشق یعنی با تو بودن، در هر شرایطی.", "تو تنها کسی هستی که می‌تواند مرا بخنداند.", "من به عشق تو، زنده‌ام و نفس می‌کشم.", "تو تمام دنیای منی، در یک قاب.", "عشق ما، زیباترین قصه‌ی عاشقانه است.", "تو همان کسی هستی که روحم را نوازش می‌کند.", "من خوشبختی را با تو تجربه کردم.", "تو دلیل تمام امیدواری‌های منی.", "عشق یعنی تو، و یک فنجان چای داغ در یک روز سرد.", "تو بهترین همسفر زندگی من هستی.", "من هر روز برای داشتن تو، سپاسگزارم.", "تو تنها چیزی هستی که برای خوشحال بودن نیاز دارم.", "عشق ما، یک معجزه‌ی تکرار نشدنی است.", "تو زیباترین فکری هستی که از ذهنم عبور می‌کند.", "من با تو، به آرامش محض می‌رسم.", "تو همان رویایی هستی که هر شب می‌بینم.", "عشق یعنی ساختن یک کلبه‌ی کوچک با تو.", "تو تمام دارایی منی.", "من در کنار تو، معنای عشق را فهمیدم.", "تو بهترین اتفاق زندگی من بودی، هستی و خواهی بود.", "عشق ما، تا ابد در قلبم خواهد ماند.", "تو تنها کسی هستی که می‌خواهم هر صبحم را با او آغاز کنم.", "با تو، هر روزم پر از عشق و امید است.", "تو دلیل تپش‌های نامنظم قلب منی.", "عشق یعنی وقتی به تو فکر می‌کنم، لبخند می‌زنم.", "تو تنها کسی هستی که دنیایم را رنگی کرده.", "برای من، عشق یعنی تو."
+        ];
+
+        const loginScreen = document.getElementById('login-screen');
+        const loadingScreen = document.getElementById('loading-screen');
+        const appScreen = document.getElementById('app-screen');
+        const loginButton = document.getElementById('login-button');
+        const passcode_input = document.getElementById('passcode-input');
+        const errorMessage = document.getElementById('error-message');
+        const quoteDisplay = document.getElementById('quote-display');
+        const backButton = document.getElementById('back-button');
+        
+        const correctPasscode = '1112';
+
+        function handleLogin() {
+            if (passcode_input.value === correctPasscode) {
+                errorMessage.textContent = '';
+                loginScreen.style.display = 'none';
+                loadingScreen.style.display = 'flex';
+
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    appScreen.style.display = 'flex';
+                    showFinalMessage();
+                }, 3000);
+
+            } else {
+                errorMessage.textContent = 'کد ورود اشتباه است!';
+                passcode_input.value = '';
+            }
+        }
+        
+        function showFinalMessage() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteDisplay.textContent = quotes[randomIndex];
+        }
+
+        function goBackToLogin() {
+            appScreen.style.display = 'none';
+            loginScreen.style.display = 'flex';
+            passcode_input.value = '';
+            errorMessage.textContent = '';
+        }
+        
+        // --- اجرای توابع ---
+        document.addEventListener('DOMContentLoaded', createStars);
+        loginButton.addEventListener('click', handleLogin);
+        passcode_input.addEventListener('keyup', (event) => {
+            if (event.key === "Enter") handleLogin();
+        });
+        backButton.addEventListener('click', goBackToLogin);
+
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
